@@ -4,11 +4,13 @@ import * as ROUTES from './constants/routes';
 import UserContext from './context/user';
 import useAuthListener from './hooks/use-auth-listener';
 
-import ProtectedRoute from './helpers/protected.route';
+import ProtectedRoute from './helpers/protected-route';
+import IsUserLoggedIn from './helpers/is-user-logged-in';
 
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 const HomePage = lazy(() => import('./pages/HomePage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 export default function App() {
@@ -18,8 +20,21 @@ export default function App() {
       <Router>
         <Suspense fallback={<p>Loading...</p>}>
           <Switch>
-            <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-            <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <IsUserLoggedIn
+              user={user}
+              loggedInPath={ROUTES.HOME}
+              path={ROUTES.LOGIN}
+            >
+              <LoginPage />
+            </IsUserLoggedIn>
+            <IsUserLoggedIn
+              user={user}
+              loggedInPath={ROUTES.HOME}
+              path={ROUTES.SIGN_UP}
+            >
+              <SignUpPage />
+            </IsUserLoggedIn>
+            <Route path={ROUTES.PROFILE} component={ProfilePage} />
             <ProtectedRoute user={user} path={ROUTES.HOME} exact>
               <HomePage />
             </ProtectedRoute>
