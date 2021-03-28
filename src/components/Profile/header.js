@@ -52,7 +52,7 @@ export default function Header({
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto">
       <div className="container flex justify-center">
-        {user.username && (
+        {profileUsername && (
           <img
             className="rounded-full h-40 w-40 flex"
             src={`/images/avatars/${profileUsername}.jpg`}
