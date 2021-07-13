@@ -13,7 +13,7 @@ export default function usePhotos() {
       const [{ following }] = await getUserByUserId(userId);
       let followedUserPhotos = [];
 
-      if (following.length > 0) {
+      if (following && following.length > 0) {
         followedUserPhotos = await getPhotos(userId, following);
       }
 

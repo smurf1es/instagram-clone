@@ -23,9 +23,10 @@ export default function Profile({ user }) {
       dispatch({
         profile: user,
         photosCollection: photos,
-        followerCount: user.followers.length,
+        followerCount: user.followers && user.followers.length,
       });
     }
+
     getProfileInfoAndPhotos();
   }, [user]);
 
@@ -34,7 +35,7 @@ export default function Profile({ user }) {
       <Header
         photosCount={photosCollection ? photosCollection.length : 0}
         profile={profile}
-        followerCount={followerCount}
+        followerCount={followerCount || 0}
         setFollowerCount={dispatch}
       />
       <Photos photos={photosCollection} />
